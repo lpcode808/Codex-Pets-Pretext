@@ -1,6 +1,6 @@
 # Codex Pets Text Explorer
 
-[Live GitHub Pages implementation](https://justinlai.github.io/Codex-Pets-Pretext/)
+[Live GitHub Pages implementation](https://lpcode808.github.io/Codex-Pets-Pretext/)
 
 A small prototype for the Codex pets idea: keep the Codex docs/settings page shape, add a Settings > Pets style selector, then let the selected official pet sprite explore live text while the text routes around it.
 
