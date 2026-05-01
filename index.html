@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Codex Pets Text Explorer</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2310a37f'/%3E%3Ccircle cx='24' cy='29' r='6' fill='white'/%3E%3Ccircle cx='42' cy='29' r='6' fill='white'/%3E%3Cpath d='M25 44q7 5 14 0' stroke='white' stroke-width='5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="https://developers.openai.com/" aria-label="OpenAI Developers">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>OpenAI Developers</span>
+      </a>
+      <nav class="topnav" aria-label="Primary navigation">
+        <a href="https://developers.openai.com/">Home</a>
+        <a href="https://developers.openai.com/api">API</a>
+        <a class="is-active" href="https://developers.openai.com/codex">Codex</a>
+        <a href="https://developers.openai.com/chatgpt">ChatGPT</a>
+        <a href="https://developers.openai.com/resources">Resources</a>
+      </nav>
+      <div class="top-actions">
+        <button class="search" type="button">Search docs</button>
+        <a class="dashboard" href="https://platform.openai.com/">API Dashboard</a>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Codex docs navigation">
+        <div class="sidebar-title">Codex</div>
+        <a href="#">Overview</a>
+        <a href="#">Quickstart</a>
+        <a href="#">Explore use cases</a>
+        <a href="#">Migrate</a>
+        <div class="nav-group">Using Codex</div>
+        <a href="#">App overview</a>
+        <a href="#">Features</a>
+        <a class="active" href="#codex-pets">Settings</a>
+        <a href="#">Review</a>
+        <a href="#">Automations</a>
+        <a href="#">Worktrees</a>
+        <a href="#">In-app browser</a>
+        <div class="nav-group">Configuration</div>
+        <a href="#">Config basics</a>
+        <a href="#">Rules</a>
+        <a href="#">Skills</a>
+        <a href="#">Subagents</a>
+      </aside>
+
+      <main class="content">
+        <article class="article">
+          <div class="eyebrow">Codex app</div>
+          <h1>Codex app settings</h1>
+          <p class="lede">
+            Configure Codex app behavior and preferences. This mock keeps the docs page
+            shape, then gives the pets section a working selector and text explorer.
+          </p>
+
+          <section>
+            <h2>General</h2>
+            <p>
+              Choose where files open, how much command output appears in threads, and
+              whether Codex keeps your computer awake while a turn runs.
+            </p>
+          </section>
+
+          <section>
+            <h2>Notifications</h2>
+            <p>
+              Choose when turn completion notifications appear and whether Codex should
+              prompt for notification permissions.
+            </p>
+          </section>
+
+          <section>
+            <h2>Agent configuration</h2>
+            <p>
+              Codex agents in the app inherit the same configuration as the IDE and CLI
+              extension. Use the in-app controls for common settings, or edit
+              <code>config.toml</code> for advanced options.
+            </p>
+          </section>
+
+          <section>
+            <h2>Appearance</h2>
+            <p>
+              In Settings, change the base theme, accent, background, foreground colors,
+              and the UI and code fonts. You can also share your custom theme with friends.
+            </p>
+          </section>
+
+          <section id="codex-pets" class="pets-section">
+            <div>
+              <h2>Codex pets</h2>
+              <p>
+                Codex pets are optional animated companions for the app. In
+                <strong>Settings</strong>, choose <strong>Pets</strong> to select a built-in
+                pet or refresh custom pets from your local Codex home.
+              </p>
+              <p>
+                Type <code>/pet</code> in the composer, use <strong>Wake Pet</strong> or
+                <strong>Tuck Away Pet</strong> in Settings, or press <code>Cmd+K</code> or
+                <code>Ctrl+K</code> and run the same commands to toggle the floating overlay.
+              </p>
+              <p>
+                This prototype lets the selected pet explore the text itself. The canvas
+                renderer uses the official sprite sheets from the docs component and routes
+                each line around the moving avatar.
+              </p>
+            </div>
+
+            <aside class="pet-settings" aria-label="Pet settings">
+              <div class="settings-head">
+                <div>
+                  <span class="panel-label">Settings</span>
+                  <h3>Pets</h3>
+                </div>
+                <button id="wakeToggle" type="button">Tuck Away</button>
+              </div>
+
+              <div class="field">
+                <span class="field-label">Built-in pet</span>
+                <div id="petSelector" class="pet-selector" role="listbox" aria-label="Choose pet"></div>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="modeSelect">Exploration mode</label>
+                <select id="modeSelect">
+                  <option value="roam">Roam text</option>
+                  <option value="scan">Scan line by line</option>
+                  <option value="orbit">Orbit paragraph</option>
+                </select>
+              </div>
+
+              <div class="pet-overlay-card">
+                <button id="avatarButton" class="pet-button" type="button" aria-label="Cycle to next Codex pet">
+                  <span id="previewAvatar" class="avatar" aria-hidden="true"></span>
+                  <span id="petBadge" class="pet-badge" aria-hidden="true">1/8</span>
+                </button>
+                <div class="prompt-card">
+                  <div class="prompt-text">
+                    <span id="promptTitle" class="prompt-title">Codex</span>
+                    <span id="promptBody" class="prompt-body">
+                      I found a tiny loose thread in settings. Want me to tug it?
+                    </span>
+                  </div>
+                  <span class="spinner" aria-label="Running"></span>
+                </div>
+              </div>
+            </aside>
+          </section>
+
+          <section class="thread-demo" aria-label="Pet exploring text">
+            <div class="thread-head">
+              <div>
+                <span class="panel-label">Active thread preview</span>
+                <h2 id="threadTitle">Codex is exploring the text</h2>
+              </div>
+              <div class="thread-actions">
+                <button id="pauseToggle" type="button">Pause</button>
+                <button id="resetPath" type="button">Reset path</button>
+              </div>
+            </div>
+            <canvas id="threadStage" aria-label="Canvas text preview routed around selected pet"></canvas>
+            <div class="metric-row" aria-label="Layout metrics">
+              <span><strong id="engineMetric">loading</strong> engine</span>
+              <span><strong id="lineMetric">0</strong> lines</span>
+              <span><strong id="petMetric">Codex</strong> employed</span>
+            </div>
+          </section>
+
+          <section>
+            <h2>Git</h2>
+            <p>
+              Use Git settings to standardize branch naming and choose whether Codex uses
+              force pushes.
+            </p>
+          </section>
+        </article>
+      </main>
+
+      <aside class="right-rail" aria-label="On this page">
+        <div class="rail-title">On this page</div>
+        <a href="#">General</a>
+        <a href="#">Notifications</a>
+        <a href="#">Agent configuration</a>
+        <a href="#">Appearance</a>
+        <a class="active" href="#codex-pets">Codex pets</a>
+        <a href="#">Git</a>
+      </aside>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
